@@ -1,12 +1,11 @@
+import { Button } from '@/components/ui/button'
 import React from 'react'
 
 const page = () => {
   return (
-    <div className='flex h-screen justify-center items-center'>
-      <h1 className='text-white'>
-        Hello There
-      </h1>
-    </div>
+    <Button>
+      Click Me
+    </Button>
   )
 }
 
