@@ -66,7 +66,7 @@ export const AgentForm = ({onSuccess,onCancel,initialValues}:AgentFormProps) => 
 
     const onSubmit = (values:z.infer<typeof agentsInsertSchema>) => {
         if(isEdit) {
-            console.log("TOOD: updateAgent")
+            console.log("TODO: updateAgent")
         } else {
             createAgent.mutate(values)
         }
