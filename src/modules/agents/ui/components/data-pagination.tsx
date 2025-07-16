@@ -18,7 +18,7 @@ export const DataPagination = ({page,totalPages,onPageChange}:Props) => {
                 size="sm"
                 onClick={()=> onPageChange(Math.max(1,page-1))}
                 >
-                    Prevoius
+                    Previous
                 </Button>
                 <Button disabled={page=== totalPages || totalPages===0}
                 variant="outline"
