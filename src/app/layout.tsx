@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <NuqsAdapter>
     <TRPCReactProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={`${inter.className} antialiased`}
           >
