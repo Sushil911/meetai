@@ -53,7 +53,7 @@ export const AgentIdViewHeader = ({agentId,agentName,onEdit,onRemove}:Props) => 
         </Breadcrumb>
         <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost">
+                <Button variant="ghost" className="hover:cursor-pointer">
                     <MoreVertical />
                 </Button>
             </DropdownMenuTrigger>
