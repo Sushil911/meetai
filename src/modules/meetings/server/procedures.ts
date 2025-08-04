@@ -5,6 +5,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { and, count, desc, eq, getTableColumns, ilike } from "drizzle-orm";
 import { z } from "zod";
+import { meetingsInsertSchema, meetingsUpdateSchema } from "../schemas";
 
 export const meetingsRouter = createTRPCRouter({
     getOne:protectedProcedure
@@ -62,5 +63,42 @@ export const meetingsRouter = createTRPCRouter({
             total: total.count,
             totalPages
         }
+    }),
+    create: protectedProcedure
+    .input(meetingsInsertSchema)
+    .mutation(async ({input,ctx})=> {
+        const [createdMeeting] = await db.
+        insert(meetings)
+        .values({
+            ...input,
+            userId:ctx.auth.user.id
+        })
+        .returning()
+
+        if(!createdMeeting){
+            throw new TRPCError({code:"NOT_FOUND",message:"Meeting not found"})
+        }
+
+        // TODO: Create Stream Call, Upsert Stream Users
+
+        return createdMeeting
+    }),
+    update: protectedProcedure
+    .input(meetingsUpdateSchema)
+    .mutation(async ({input,ctx}) => {
+        const [updatedAgent] = await db
+        .update(meetings)
+        .set(input)
+        .where(
+            and(
+                eq(meetings.id,input.id),
+                eq(meetings.userId,ctx.auth.user.id)
+            )
+        )
+        .returning()
+        if(!updatedAgent){
+            throw new TRPCError({code:"NOT_FOUND", message:"Meeting not found"})
+        }
+        return updatedAgent
     })
 })
